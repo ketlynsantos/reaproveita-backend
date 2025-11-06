@@ -1,5 +1,6 @@
 from db_connection import connect_to_db
 
+
 def get_all_posts():
     """
     Retorna todos os posts cadastrados no banco Oracle.
@@ -10,7 +11,8 @@ def get_all_posts():
         cursor = conn.cursor()
 
         # Consulta todos os posts ordenados pela data (mais recentes primeiro)
-        cursor.execute("""
+        cursor.execute(
+            """
             SELECT
                 id,
                 img,
@@ -24,7 +26,8 @@ def get_all_posts():
                 read_time
             FROM posts
             ORDER BY post_date DESC
-        """)
+        """
+        )
 
         # Converte cada linha em dicionário
         columns = [col[0].lower() for col in cursor.description]
@@ -60,7 +63,8 @@ def get_post_by_id(post_id):
         conn = connect_to_db()
         cursor = conn.cursor()
 
-        cursor.execute("""
+        cursor.execute(
+            """
             SELECT
                 id,
                 img,
@@ -74,7 +78,9 @@ def get_post_by_id(post_id):
                 read_time
             FROM posts
             WHERE id = :id
-        """, {"id": post_id})
+        """,
+            {"id": post_id},
+        )
 
         row = cursor.fetchone()
         if not row:
@@ -103,7 +109,8 @@ def insert_post(post):
         conn = connect_to_db()
         cursor = conn.cursor()
 
-        cursor.execute("""
+        cursor.execute(
+            """
             INSERT INTO posts (
                 img, alt_text, title, description, content,
                 category, author, post_date, read_time
@@ -111,17 +118,19 @@ def insert_post(post):
                 :img, :alt, :title, :description, :content,
                 :category, :author, TO_DATE(:post_date, 'YYYY-MM-DD'), :read_time
             )
-        """, {
-            "img": post.get("img"),
-            "alt": post.get("alt"),
-            "title": post.get("title"),
-            "description": post.get("description"),
-            "content": post.get("content"),
-            "category": post.get("category"),
-            "author": post.get("author"),
-            "post_date": post.get("post_date"),
-            "read_time": post.get("read_time")
-        })
+        """,
+            {
+                "img": post.get("img"),
+                "alt": post.get("alt"),
+                "title": post.get("title"),
+                "description": post.get("description"),
+                "content": post.get("content"),
+                "category": post.get("category"),
+                "author": post.get("author"),
+                "post_date": post.get("post_date"),
+                "read_time": post.get("read_time"),
+            },
+        )
 
         conn.commit()
         print("Novo post inserido com sucesso!")
