@@ -3,7 +3,7 @@ import os
 from http.server import BaseHTTPRequestHandler, HTTPServer
 
 from blog import get_all_posts
-from contact import save_contact
+from contact import handle_contact
 
 
 class ReaproveitaServer(BaseHTTPRequestHandler):
@@ -45,7 +45,7 @@ class ReaproveitaServer(BaseHTTPRequestHandler):
             message = data.get("message")
 
             # Insere no banco (contato)
-            save_contact(name, email, message)
+            handle_contact(name, email, message)
 
             self.send_response(200)
             self._set_headers()
