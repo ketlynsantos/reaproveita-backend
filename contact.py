@@ -1,5 +1,6 @@
 import os
 import smtplib
+import threading
 from email.mime.text import MIMEText
 
 from dotenv import load_dotenv
@@ -68,5 +69,9 @@ def handle_contact(name, email, message):
     """
     Processa o envio do formulário de contato.
     """
-    save_contact(name, email, message)
-    send_contact_email(name, email, message)
+
+    def job():
+        save_contact(name, email, message)
+        send_contact_email(name, email, message)
+
+    threading.Thread(target=job, daemon=True).start()

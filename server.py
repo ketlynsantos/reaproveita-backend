@@ -44,14 +44,14 @@ class ReaproveitaServer(BaseHTTPRequestHandler):
             email = data.get("email")
             message = data.get("message")
 
-            # Insere no banco (contato)
-            handle_contact(name, email, message)
-
             self.send_response(200)
             self._set_headers()
             self.end_headers()
             response = {"status": "success", "message": "Mensagem enviada com sucesso!"}
             self.wfile.write(json.dumps(response).encode())
+
+            # Processa em background
+            handle_contact(name, email, message)
 
         else:
             self.send_response(404)
