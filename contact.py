@@ -55,10 +55,9 @@ def send_contact_email(name, email, message):
         msg["To"] = receiver
         msg["Reply-To"] = email  # permite responder diretamente para quem enviou
 
-        with smtplib.SMTP("smtp.gmail.com", 587) as server:
-            server.starttls()
+        with smtplib.SMTP_SSL("smtp.gmail.com", 465, timeout=10) as server:
             server.login(sender, password)
-            server.send_message(msg)
+            server.sendmail(sender, receiver, msg.as_string())
 
         print("Email enviado com sucesso.")
     except Exception as error:
