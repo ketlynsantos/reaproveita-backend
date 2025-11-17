@@ -11,7 +11,7 @@ O servidor utiliza **HTTPServer** da biblioteca padrão do Python e conecta-se a
 
 ## Tecnologias
 
-* Python 3.x
+* Python 3
 * Oracle Database (via `oracledb`)
 * Bibliotecas padrão: `http.server`, `json`, `smtplib` (opcional para envio de e-mails)
 * `python-dotenv` para variáveis de ambiente
