@@ -3,7 +3,7 @@ import os
 from http.server import BaseHTTPRequestHandler, HTTPServer
 
 from blog import get_all_posts
-from contact import handle_contact
+from contact import save_contact
 
 
 class ReaproveitaServer(BaseHTTPRequestHandler):
@@ -44,14 +44,15 @@ class ReaproveitaServer(BaseHTTPRequestHandler):
             email = data.get("email")
             message = data.get("message")
 
+            # Salva os dados no banco
+            save_contact(name, email, message)
+
             self.send_response(200)
             self._set_headers()
             self.end_headers()
             response = {"status": "success", "message": "Mensagem enviada com sucesso!"}
             self.wfile.write(json.dumps(response).encode())
 
-            # Processa em background
-            handle_contact(name, email, message)
 
         else:
             self.send_response(404)
