@@ -143,9 +143,10 @@ python server.py
 
 **Tabela CONTACTS**
 
-* NAME (VARCHAR2)
-* EMAIL (VARCHAR2)
-* MESSAGE (CLOB ou VARCHAR2)
+* id (NUMBER, PK)
+* name (VARCHAR2)
+* email (VARCHAR2)
+* message (CLOB)
 
 **Tabela POSTS**
 
